@@ -19,7 +19,7 @@ function App() {
         <Route path='/signup' component={Signup} />
         <PrivateRoute path='/adminpage' component={AdminPage} />
         <PrivateRoute path='/userpage' component={UserPage} />
-      </Router>
+      </Router> 
     </AuthProvider>
   )
 }

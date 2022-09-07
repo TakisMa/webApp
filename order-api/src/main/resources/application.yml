@@ -2,12 +2,15 @@ spring:
   application:
     name: order-api
   jpa:
-    hibernate:
-      ddl-auto: create
+      show-sql: true
+
+      hibernate:
+          ddl-auto: create
+
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/orderdb?characterEncoding=UTF-8&serverTimezone=UTC
     username: root
-    password: secret
+    password: root
 
 app:
   jwt:
