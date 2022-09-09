@@ -15,7 +15,7 @@ import java.util.List;
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
@@ -40,28 +40,22 @@ public class Item {
     private User seller;
 
 
-    public Item(String name, String category, Double currently, Double buyPrice, Double firstBid, Integer numberOfBids, LocalDateTime started, LocalDateTime ends, String description, User user) {
+    public Item(String name, String category, Double currently, Double buyPrice, Double firstBid, Integer numberOfBids, LocalDateTime ends, String description, User user) {
         this.name = name;
         this.category = category;
         this.currently = currently;
         this.buyPrice = buyPrice;
         this.firstBid = firstBid;
         this.numberOfBids = numberOfBids;
-        this.started = started;
         this.ends = ends;
         this.description = description;
         this.seller = user;
     }
 
-        public Item(String name, String category, Double currently, Double firstBid, Integer numberOfBids, LocalDateTime started, LocalDateTime ends, String description, User user) {
-            this.name = name;
-            this.category = category;
-            this.currently = currently;
-            this.firstBid = firstBid;
-            this.numberOfBids = numberOfBids;
-            this.started = started;
-            this.ends = ends;
-            this.description = description;
-            this.seller = user;
+
+    @PrePersist
+    public void onPrePersist() {
+        started = LocalDateTime.now();
+        ends = LocalDateTime.now().plusDays(7);
     }
 }

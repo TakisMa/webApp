@@ -47,7 +47,6 @@ public class DatabaseInitializer implements CommandLineRunner {
             null,
             7.0,
             0,
-            LocalDateTime.now(),
             LocalDateTime.now().plusDays(5),
             "This is a detailed description for the first item",
             USERS.get(0)
