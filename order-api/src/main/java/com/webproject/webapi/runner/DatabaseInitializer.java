@@ -49,7 +49,7 @@ public class DatabaseInitializer implements CommandLineRunner {
             0,
             LocalDateTime.now().plusDays(5),
             "This is a detailed description for the first item",
-            USERS.get(0)
+            USERS.get(1)
         ));
 
         bidService.saveBid(new Bid(

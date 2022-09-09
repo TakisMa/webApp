@@ -1,16 +1,14 @@
 import { instance } from './Axios'
 import { bearerAuth } from './Helpers'
 
-export const orderApi = {
+export const itemApi = {
   authenticate,
   signup,
-  numberOfUsers,
-  numberOfOrders,
   getUsers,
   deleteUser,
-  getOrders,
-  deleteOrder,
-  createOrder,
+  getItems,
+  deleteItem,
+  createItem,
   getUserMe
 }
 
@@ -26,14 +24,6 @@ function signup(user) {
   })
 }
 
-function numberOfUsers() {
-  return instance.get('/public/numberOfUsers')
-}
-
-function numberOfOrders() {
-  return instance.get('/public/numberOfOrders')
-}
-
 function getUsers(user, username) {
   const url = username ? `/api/users/${username}` : '/api/users'
   return instance.get(url, {
@@ -47,21 +37,21 @@ function deleteUser(user, username) {
   })
 }
 
-function getOrders(user, text) {
-  const url = text ? `/api/orders?text=${text}` : '/api/orders'
+function getItems(user, text) {
+  const url = text ? `/api/items?text=${text}` : '/api/items'
   return instance.get(url, {
     headers: { 'Authorization': bearerAuth(user) }
   })
 }
 
-function deleteOrder(user, orderId) {
-  return instance.delete(`/api/orders/${orderId}`, {
+function deleteItem(user, itemId) {
+  return instance.delete(`/api/items/${itemId}`, {
     headers: { 'Authorization': bearerAuth(user) }
   })
 }
 
-function createOrder(user, order) {
-  return instance.post('/api/orders', order, {
+function createItem(user, item) {
+  return instance.post('/api/items', item, {
     headers: {
       'Content-type': 'application/json',
       'Authorization': bearerAuth(user)

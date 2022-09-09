@@ -14,11 +14,22 @@ public class UserDto {
     private String email;
     private String role;
     private List<OrderDto> orders;
+    private List<ItemDto> items;
 
     @Data
     public static final class OrderDto {
         private String id;
         private String description;
         private ZonedDateTime createdAt;
+    }
+
+    @Data
+    public static final class ItemDto {
+        private Long id;
+        private String name;
+        private String category;
+        private Double currently;
+        private Double buyPrice;
+        private String description;
     }
 }

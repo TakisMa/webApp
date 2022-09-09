@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public interface ItemMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "seller", ignore = true)
     Item toItem(CreateItemRequest createItemRequest);
 
 

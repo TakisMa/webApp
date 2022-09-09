@@ -14,3 +14,7 @@ export const handleLogError = (error) => {
     console.log(error.message);
   }
 }
+
+export function bearerAuth(user) {
+  return `Bearer ${user.accessToken}`
+}
