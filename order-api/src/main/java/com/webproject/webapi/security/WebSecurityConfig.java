@@ -1,6 +1,7 @@
 package com.webproject.webapi.security;
 
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.control.MappingControl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -30,8 +31,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/orders").hasAnyAuthority(ADMIN, USER)
+                .antMatchers(HttpMethod.POST, "/api/items").hasAnyAuthority(ADMIN, USER)
                 .antMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority(ADMIN, USER)
-                .antMatchers("/api/orders", "/api/orders/**").hasAuthority(ADMIN)
+                .antMatchers("/api/orders", "/api/orders/**").hasAnyAuthority(ADMIN, USER)
+                .antMatchers("/api/items", "/api/items/**").hasAnyAuthority(ADMIN, USER)
                 .antMatchers("/api/users", "/api/users/**").hasAuthority(ADMIN)
                 .antMatchers("/public/**", "/auth/**").permitAll()
                 .antMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()

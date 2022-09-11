@@ -15,8 +15,7 @@ import java.util.List;
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
     private String name;
     private String category;
@@ -40,7 +39,7 @@ public class Item {
     private User seller;
 
 
-    public Item(String name, String category, Double currently, Double buyPrice, Double firstBid, Integer numberOfBids, LocalDateTime ends, String description, User user) {
+    public Item(String name, String category, Double currently, Double buyPrice, Double firstBid, Integer numberOfBids, LocalDateTime ends, String description) {
         this.name = name;
         this.category = category;
         this.currently = currently;
@@ -49,7 +48,6 @@ public class Item {
         this.numberOfBids = numberOfBids;
         this.ends = ends;
         this.description = description;
-        this.seller = user;
     }
 
 

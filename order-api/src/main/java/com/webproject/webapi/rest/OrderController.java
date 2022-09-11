@@ -12,6 +12,7 @@ import com.webproject.webapi.config.SwaggerConfig;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/orders")
@@ -42,6 +44,7 @@ public class OrderController {
     @GetMapping
     public List<OrderDto> getOrders(@RequestParam(value = "text", required = false) String text) {
         List<Order> orders = (text == null) ? orderService.getOrders() : orderService.getOrdersContainingText(text);
+        log.info("Orders List is: " + orders);
         return orders.stream()
                 .map(orderMapper::toOrderDto)
                 .collect(Collectors.toList());

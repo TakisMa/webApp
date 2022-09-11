@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Statistic, Icon, Grid, Container, Image, Segment, Dimmer, Loader } from 'semantic-ui-react'
+import { Statistic, Icon, Grid, Container, Image, Segment, Dimmer, Loader, GridColumn, StatisticValue, StatisticLabel } from 'semantic-ui-react'
 import { orderApi } from '../misc/OrderApi'
 import { handleLogError } from '../misc/Helpers'
 
@@ -62,8 +62,15 @@ class Home extends Component {
             </Grid.Row>
           </Grid>
 
-          <Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' style={{ marginTop: '2em' }} />
-          <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' style={{ marginTop: '2em' }} />
+          <Grid text>
+            <Grid.Row >
+              <GridColumn textAlign='center'>
+                <Segment color='violet' >
+                  
+                </Segment>
+              </GridColumn>
+            </Grid.Row>
+          </Grid>
         </Container>
       )
     }

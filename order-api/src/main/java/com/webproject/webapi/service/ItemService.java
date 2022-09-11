@@ -7,8 +7,8 @@ import java.util.List;
 public interface ItemService {
     Item saveItem(Item item);
     Item getItemByName(String name);
-    Item getItemById(Long id);
+    Item getItemById(String id);
     List<Item> getItems();
-    List<Item> getItemsContainingTextZ(String text);
+    List<Item> getItemsContainingText(String text);
 
 }

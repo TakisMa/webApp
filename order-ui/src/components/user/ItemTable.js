@@ -3,7 +3,7 @@ import { Grid, Table, Header, Icon } from 'semantic-ui-react'
 import ItemForm from '../misc/ItemForm'
 
 
-function ItemTable({ items, itemDescription, handleInputChange, handleCreateItem }) {
+function ItemTable({ items, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, handleInputChange, handleCreateItem }) {
   let itemList
   if (!items || items.length === 0) {
     itemList = (
@@ -20,6 +20,7 @@ function ItemTable({ items, itemDescription, handleInputChange, handleCreateItem
           <Table.Cell>{item.category}</Table.Cell>
           <Table.Cell>{item.currently}</Table.Cell>
           <Table.Cell>{item.buyPrice}</Table.Cell>
+          <Table.Cell>{item.started}</Table.Cell>
           <Table.Cell>{item.description}</Table.Cell>
         </Table.Row>
       )
@@ -38,6 +39,10 @@ function ItemTable({ items, itemDescription, handleInputChange, handleCreateItem
           </Grid.Column>
           <Grid.Column>
             <ItemForm
+              itemName={itemName}
+              itemCategory={itemCategory}
+              itemCurrently={itemCurrently}
+              itemBuyPrice={itemBuyPrice}
               itemDescription={itemDescription}
               handleInputChange={handleInputChange}
               handleCreateItem={handleCreateItem}
@@ -50,6 +55,7 @@ function ItemTable({ items, itemDescription, handleInputChange, handleCreateItem
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell width={3}>ID</Table.HeaderCell>
+            <Table.HeaderCell width={3}>Name</Table.HeaderCell>
             <Table.HeaderCell width={3}>Category</Table.HeaderCell>
             <Table.HeaderCell width={3}>Bid</Table.HeaderCell>
             <Table.HeaderCell width={3}>Buy Price</Table.HeaderCell>

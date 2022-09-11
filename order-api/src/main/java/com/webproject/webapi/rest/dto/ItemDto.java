@@ -7,11 +7,13 @@ import java.time.LocalDateTime;
 @Data
 public class ItemDto {
 
-    private Long id;
+    private String id;
     private String name;
     private String category;
     private Double currently;
     private Double buyPrice;
+    private LocalDateTime started;
+    private LocalDateTime ends;
     private String description;
 
     private UserDto seller;

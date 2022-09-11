@@ -19,11 +19,11 @@ public class ItemServiceImpl implements ItemService {
     public Item getItemByName(String name) { return itemRepository.findItemByName(name); }
 
     @Override
-    public Item getItemById(Long id) { return itemRepository.findItemById(id); }
+    public Item getItemById(String id) { return itemRepository.findItemById(id); }
 
     @Override
     public List<Item> getItems() { return itemRepository.findAll(); }
 
     @Override
-    public List<Item> getItemsContainingTextZ(String text) { return itemRepository.findByIdContainingOrDescriptionContainingOrderByStarted(text, text); }
+    public List<Item> getItemsContainingText(String text) { return itemRepository.findByIdContainingOrDescriptionContainingOrderByStarted(text, text); }
 }

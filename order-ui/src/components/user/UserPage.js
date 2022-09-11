@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Container, ItemDescription } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 import OrderTable from './OrderTable'
 import ItemTable from './ItemTable'
 import AuthContext from '../context/AuthContext'
@@ -29,7 +29,7 @@ class UserPage extends Component {
     const isUser = user.data.rol[0] === 'USER'
     this.setState({ isUser })
 
-    this.handleGetUserMe("item")
+    this.handleGetUserMe("order")
   }
 
   handleInputChange = (e, { name, value }) => {
@@ -41,9 +41,10 @@ class UserPage extends Component {
     const user = Auth.getUser()
 
     this.setState({ isLoading: true })
-    if (createType == "order") {
+    if (createType === "order") {
       orderApi.getUserMe(user)
         .then(response => {
+          console.log(`HandleGetUserMe(${createType}) with response.data.orders: ${response.data.orders}`)
           this.setState({ userMe: response.data })
         })
         .catch(error => {
@@ -53,9 +54,10 @@ class UserPage extends Component {
           this.setState({ isLoading: false })
         })
     }
-    else if (createType == "item") {
+    else if (createType === "item") {
       itemApi.getUserMe(user)
         .then(response => {
+          console.log(`HandleGetUserMe(${createType}) with response.data.items: ${response.data.items}`)
           this.setState({ userMe: response.data })
         })
         .catch(error => {
@@ -99,7 +101,7 @@ class UserPage extends Component {
     if (!itemName || !itemCategory || !itemCurrently || !itemDescription) {
       return
     }
-
+    
     const item = {
       name: itemName,
       category: itemCategory,
@@ -127,12 +129,16 @@ class UserPage extends Component {
     if (!this.state.isUser) {
       return <Redirect to='/' />
     } else {
-      const { userMe, isLoading, orderDescription, itemDescription } = this.state
+      const { userMe, isLoading, orderDescription, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription } = this.state
       return (
         <Container>
           <ItemTable
             items={userMe && userMe.items}
             isLoading={isLoading}
+            itemName={itemName}
+            itemCategory={itemCategory}
+            itemCurrently={itemCurrently}
+            itemBuyPrice={itemBuyPrice}
             itemDescription={itemDescription}
             handleCreateItem={this.handeCreateItem}
             handleInputChange={this.handleInputChange}

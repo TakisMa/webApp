@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, String> {
 
     Item findItemByName(String name);
-    Item findItemById(Long id);
+    Item findItemById(String id);
     List<Item> findByIdContainingOrDescriptionContainingOrderByStarted(String id, String description);
 
 }

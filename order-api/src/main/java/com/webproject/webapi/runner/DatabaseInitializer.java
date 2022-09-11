@@ -37,31 +37,6 @@ public class DatabaseInitializer implements CommandLineRunner {
             userService.saveUser(user);
         });
 
-        User someUser = userService.getUserByUsername("user")
-                .orElseThrow();
-
-        itemService.saveItem(new Item(
-            "Tommy Hilfiger",
-            "Clothing",
-            7.5,
-            null,
-            7.0,
-            0,
-            LocalDateTime.now().plusDays(5),
-            "This is a detailed description for the first item",
-            USERS.get(1)
-        ));
-
-        bidService.saveBid(new Bid(
-            LocalDateTime.now(),
-            7.0,
-            itemService.getItemByName("Tommy Hilfiger")
-            ,
-            new HashSet<>(USERS)
-        ));
-
-
-
         log.info("Database initialized");
     }
 

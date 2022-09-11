@@ -2,6 +2,7 @@ package com.webproject.webapi.rest.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -25,11 +26,13 @@ public class UserDto {
 
     @Data
     public static final class ItemDto {
-        private Long id;
+        private String id;
         private String name;
         private String category;
         private Double currently;
         private Double buyPrice;
+        private LocalDateTime started;
+        private LocalDateTime ends;
         private String description;
     }
 }

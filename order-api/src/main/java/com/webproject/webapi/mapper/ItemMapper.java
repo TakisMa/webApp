@@ -13,8 +13,11 @@ public interface ItemMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "numberOfBids", ignore = true)
+    @Mapping(target = "started", ignore = true)
+    @Mapping(target = "ends", ignore = true)
     Item toItem(CreateItemRequest createItemRequest);
 
-
     ItemDto toItemDto(Item item);
+
 }
