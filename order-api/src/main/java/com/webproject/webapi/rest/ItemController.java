@@ -32,25 +32,15 @@ public class ItemController {
     private final ItemService itemService;
     private final ItemMapper itemMapper;
 
-//    @Operation(security = {@SecurityRequirement(name = SwaggerConfig.BEARER_KEY_SECURITY_SCHEME)})
-//    @GetMapping
-//    public List<ItemDto> getItems(@RequestParam(value = "text", required = false) String text) {
-//        List<Item> items = (text == null) ? itemService.getItems() : itemService.getItemsContainingTextZ(text);
-//        log.info("Items List is:" + items);
-//        return items.stream()
-//            .map(itemMapper::toItemDto)
-//            .collect(Collectors.toList());
-//    }
-
     @Operation(security = {@SecurityRequirement(name = SwaggerConfig.BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping
-    public List<ItemDto> getItems() {
-        List<Item> items = itemService.getItems();
-        log.info("Items List is:" + items);
+    public List<ItemDto> getItems(@RequestParam(value = "text", required = false) String text) {
+        List<Item> items = (text == null) ? itemService.getItems() : itemService.getItemsContainingText(text);
         return items.stream()
             .map(itemMapper::toItemDto)
             .collect(Collectors.toList());
     }
+
 
     @Operation(security = {@SecurityRequirement(name = SwaggerConfig.BEARER_KEY_SECURITY_SCHEME)})
     @ResponseStatus(HttpStatus.CREATED)
@@ -61,6 +51,7 @@ public class ItemController {
         Item item = itemMapper.toItem(createItemRequest);
         item.setId(UUID.randomUUID().toString());
         item.setSeller(user);
+
         return itemMapper.toItemDto(itemService.saveItem(item));
     }
 

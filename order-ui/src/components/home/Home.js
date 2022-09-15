@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Statistic, Icon, Grid, Container, Image, Segment, Dimmer, Loader, GridColumn, StatisticValue, StatisticLabel } from 'semantic-ui-react'
-import { orderApi } from '../misc/OrderApi'
+import { itemApi } from '../api/ItemApi'
 import { handleLogError } from '../misc/Helpers'
 
 class Home extends Component {
@@ -13,10 +13,10 @@ class Home extends Component {
   async componentDidMount() {
     this.setState({ isLoading: true })
     try {
-      let response = await orderApi.numberOfUsers()
+      let response = await itemApi.numberOfUsers()
       const numberOfUsers = response.data
 
-      response = await orderApi.numberOfOrders()
+      response = await itemApi.numberOfOrders()
       const numberOfOrders = response.data
 
       this.setState({ numberOfUsers, numberOfOrders })

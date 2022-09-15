@@ -44,7 +44,6 @@ public class OrderController {
     @GetMapping
     public List<OrderDto> getOrders(@RequestParam(value = "text", required = false) String text) {
         List<Order> orders = (text == null) ? orderService.getOrders() : orderService.getOrdersContainingText(text);
-        log.info("Orders List is: " + orders);
         return orders.stream()
                 .map(orderMapper::toOrderDto)
                 .collect(Collectors.toList());

@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
 import OrderTable from './OrderTable'
-import ItemTable from './ItemTable'
+import ItemTable from '../item/ItemTable'
 import AuthContext from '../context/AuthContext'
-import { orderApi } from '../misc/OrderApi'
-import { itemApi } from '../misc/ItemApi'
+import { itemApi } from '../api/ItemApi'
 import { handleLogError } from '../misc/Helpers'
 
 class UserPage extends Component {
@@ -20,7 +19,7 @@ class UserPage extends Component {
     itemCategory: '',
     itemCurrently: '',
     itemBuyPrice: '',
-    itemDescription: ''
+    itemDescription: '',
   }
 
   componentDidMount() {
@@ -29,22 +28,20 @@ class UserPage extends Component {
     const isUser = user.data.rol[0] === 'USER'
     this.setState({ isUser })
 
-    this.handleGetUserMe("order")
+    this.handleGetUserMe()
   }
 
   handleInputChange = (e, { name, value }) => {
     this.setState({ [name]: value })
   }
 
-  handleGetUserMe = (createType) => {
+  handleGetUserMe = () => {
     const Auth = this.context
     const user = Auth.getUser()
 
     this.setState({ isLoading: true })
-    if (createType === "order") {
-      orderApi.getUserMe(user)
+    itemApi.getUserMe(user)
         .then(response => {
-          console.log(`HandleGetUserMe(${createType}) with response.data.orders: ${response.data.orders}`)
           this.setState({ userMe: response.data })
         })
         .catch(error => {
@@ -53,20 +50,6 @@ class UserPage extends Component {
         .finally(() => {
           this.setState({ isLoading: false })
         })
-    }
-    else if (createType === "item") {
-      itemApi.getUserMe(user)
-        .then(response => {
-          console.log(`HandleGetUserMe(${createType}) with response.data.items: ${response.data.items}`)
-          this.setState({ userMe: response.data })
-        })
-        .catch(error => {
-          handleLogError(error)
-        })
-        .finally(() => {
-          this.setState({ isLoading: false })
-        })
-    }
   }
 
   handleCreateOrder = () => {
@@ -80,9 +63,9 @@ class UserPage extends Component {
     }
 
     const order = { description: orderDescription }
-    orderApi.createOrder(user, order)
+    itemApi.createOrder(user, order)
       .then(() => {
-        this.handleGetUserMe("order")
+        this.handleGetUserMe()
         this.setState({ orderDescription: '' })
       })
       .catch(error => {
@@ -101,7 +84,7 @@ class UserPage extends Component {
     if (!itemName || !itemCategory || !itemCurrently || !itemDescription) {
       return
     }
-    
+
     const item = {
       name: itemName,
       category: itemCategory,
@@ -111,7 +94,7 @@ class UserPage extends Component {
     }
     itemApi.createItem(user, item)
       .then(() => {
-        this.handleGetUserMe("item")
+        this.handleGetUserMe()
         this.setState({
           itemName: '',
           itemCategory: '',

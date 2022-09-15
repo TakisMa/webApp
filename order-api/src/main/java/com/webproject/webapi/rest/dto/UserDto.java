@@ -31,8 +31,8 @@ public class UserDto {
         private String category;
         private Double currently;
         private Double buyPrice;
-        private LocalDateTime started;
-        private LocalDateTime ends;
+        private String started;
+        private String ends;
         private String description;
     }
 }

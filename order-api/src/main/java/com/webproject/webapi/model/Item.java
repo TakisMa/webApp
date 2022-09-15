@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class Item {
     private Double firstBid;
     @Column(name = "number_of_bids")
     private Integer numberOfBids;
-    private LocalDateTime started;
-    private LocalDateTime ends;
+    private String started;
+    private String ends;
     private String description;
 
 
@@ -39,7 +40,7 @@ public class Item {
     private User seller;
 
 
-    public Item(String name, String category, Double currently, Double buyPrice, Double firstBid, Integer numberOfBids, LocalDateTime ends, String description) {
+    public Item(String name, String category, Double currently, Double buyPrice, Double firstBid, Integer numberOfBids, String ends, String description) {
         this.name = name;
         this.category = category;
         this.currently = currently;
@@ -53,7 +54,10 @@ public class Item {
 
     @PrePersist
     public void onPrePersist() {
-        started = LocalDateTime.now();
-        ends = LocalDateTime.now().plusDays(7);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        LocalDateTime dateTimeStart = LocalDateTime.now();
+        LocalDateTime dateTimeEnd = LocalDateTime.now().plusDays(7);
+        started = dateTimeStart.format(format);
+        ends = dateTimeEnd.format(format);
     }
 }

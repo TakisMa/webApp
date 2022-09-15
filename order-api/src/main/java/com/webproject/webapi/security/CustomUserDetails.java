@@ -15,6 +15,7 @@ public class CustomUserDetails implements UserDetails {
     private String name;
     private String email;
     private Collection<? extends GrantedAuthority> authorities;
+    private boolean enabled=false;
 
     @Override
     public boolean isAccountNonExpired() {
@@ -33,6 +34,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
 import AuthContext from '../context/AuthContext'
-import { orderApi } from '../misc/OrderApi'
+import { itemApi } from '../api/ItemApi'
 import AdminTab from './AdminTab'
 import { handleLogError } from '../misc/Helpers'
 
@@ -39,7 +39,7 @@ class AdminPage extends Component {
     const user = Auth.getUser()
 
     this.setState({ isUsersLoading: true })
-    orderApi.getUsers(user)
+    itemApi.getUsers(user)
       .then(response => {
         this.setState({ users: response.data })
       })
@@ -55,7 +55,20 @@ class AdminPage extends Component {
     const Auth = this.context
     const user = Auth.getUser()
 
-    orderApi.deleteUser(user, username)
+    itemApi.deleteUser(user, username)
+      .then(() => {
+        this.handleGetUsers()
+      })
+      .catch(error => {
+        handleLogError(error)
+      })
+  }
+
+  handleEnableUser = (username) => {
+    const Auth = this.context
+    const user = Auth.getUser()
+
+    itemApi.enableUser(user, username)
       .then(() => {
         this.handleGetUsers()
       })
@@ -69,7 +82,7 @@ class AdminPage extends Component {
     const user = Auth.getUser()
 
     const username = this.state.userUsernameSearch
-    orderApi.getUsers(user, username)
+    itemApi.getUsers(user, username)
       .then(response => {
         const data = response.data
         const users = data instanceof Array ? data : [data]
@@ -86,7 +99,7 @@ class AdminPage extends Component {
     const user = Auth.getUser()
 
     this.setState({ isOrdersLoading: true })
-    orderApi.getOrders(user)
+    itemApi.getOrders(user)
       .then(response => {
         this.setState({ orders: response.data })
       })
@@ -102,7 +115,7 @@ class AdminPage extends Component {
     const Auth = this.context
     const user = Auth.getUser()
 
-    orderApi.deleteOrder(user, isbn)
+    itemApi.deleteOrder(user, isbn)
       .then(() => {
         this.handleGetOrders()
       })
@@ -122,7 +135,7 @@ class AdminPage extends Component {
     }
 
     const order = { description: orderDescription }
-    orderApi.createOrder(user, order)
+    itemApi.createOrder(user, order)
       .then(() => {
         this.handleGetOrders()
         this.setState({ orderDescription: '' })
@@ -137,7 +150,7 @@ class AdminPage extends Component {
     const user = Auth.getUser()
 
     const text = this.state.orderTextSearch
-    orderApi.getOrders(user, text)
+    itemApi.getOrders(user, text)
       .then(response => {
         const orders = response.data
         this.setState({ orders })
@@ -160,6 +173,7 @@ class AdminPage extends Component {
             users={users}
             userUsernameSearch={userUsernameSearch}
             handleDeleteUser={this.handleDeleteUser}
+            handleEnableUser={this.handleEnableUser}
             handleSearchUser={this.handleSearchUser}
             isOrdersLoading={isOrdersLoading}
             orders={orders}
