@@ -1,34 +1,36 @@
 import React, { Component } from 'react'
-import { Statistic, Icon, Grid, Container, Image, Segment, Dimmer, Loader, GridColumn, StatisticValue, StatisticLabel } from 'semantic-ui-react'
+import { Statistic, Icon, Grid, Container, Segment, Dimmer, Loader, GridColumn } from 'semantic-ui-react'
 import { itemApi } from '../api/ItemApi'
 import { handleLogError } from '../misc/Helpers'
+import AuctionTable from './AuctionTable'
 
 class Home extends Component {
   state = {
-    numberOfUsers: 0,
-    numberOfOrders: 0,
     isLoading: false,
+    items: null
   }
 
   async componentDidMount() {
-    this.setState({ isLoading: true })
-    try {
-      let response = await itemApi.numberOfUsers()
-      const numberOfUsers = response.data
+    this.handleGetItems()
+  }
 
-      response = await itemApi.numberOfOrders()
-      const numberOfOrders = response.data
-
-      this.setState({ numberOfUsers, numberOfOrders })
-    } catch (error) {
-      handleLogError(error)
-    } finally {
-      this.setState({ isLoading: false })
-    }
+  handleGetItems = () => {
+    this.setState({ isLoading: true})
+    itemApi.getAllItems()
+      .then(response => {
+        this.setState({ items: response.data })
+      })
+      .catch(error => {
+        handleLogError(error)
+      })
+      .finally(() => {
+        this.setState({ isLoading: false})
+      })
   }
 
   render() {
-    const { isLoading } = this.state
+    const { items, isLoading } = this.state
+
     if (isLoading) {
       return (
         <Segment basic style={{ marginTop: window.innerHeight / 2 }}>
@@ -38,35 +40,24 @@ class Home extends Component {
         </Segment>
       )
     } else {
-      const { numberOfUsers, numberOfOrders } = this.state
       return (
-        <Container text>
-          <Grid stackable columns={2}>
+        <Container text maxWidth="sm">
+          <Grid>
             <Grid.Row>
               <Grid.Column textAlign='center'>
-                <Segment color='violet'>
-                  <Statistic>
-                    <Statistic.Value><Icon name='user' color='grey' />{numberOfUsers}</Statistic.Value>
-                    <Statistic.Label>Users</Statistic.Label>
-                  </Statistic>
-                </Segment>
-              </Grid.Column>
-              <Grid.Column textAlign='center'>
-                <Segment color='violet'>
-                  <Statistic>
-                    <Statistic.Value><Icon name='laptop' color='grey' />{numberOfOrders}</Statistic.Value>
-                    <Statistic.Label>Orders</Statistic.Label>
-                  </Statistic>
-                </Segment>
+                Auctions
               </Grid.Column>
             </Grid.Row>
           </Grid>
+             
 
           <Grid text>
             <Grid.Row >
               <GridColumn textAlign='center'>
                 <Segment color='violet' >
-                  
+                 <AuctionTable 
+                    items={items}
+                  />   
                 </Segment>
               </GridColumn>
             </Grid.Row>

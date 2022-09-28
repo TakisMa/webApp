@@ -32,10 +32,10 @@ public class Item {
     private String description;
 
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    private List<Bid> bids = new ArrayList<>();
+    @OneToOne(mappedBy = "item", cascade = CascadeType.MERGE)
+    private Bid bid;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User seller;
 

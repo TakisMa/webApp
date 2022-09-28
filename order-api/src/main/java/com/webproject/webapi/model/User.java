@@ -27,7 +27,7 @@ public class User {
     private String name;
     private String email;
     private String role;
-    private boolean enabled = false;
+    private boolean enabled = true;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
@@ -35,8 +35,9 @@ public class User {
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> items = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "bidder", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Bid> bids = new ArrayList<>();
+    @OneToOne(mappedBy = "bidder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Bid bid;
+
 
     public boolean getEnabled() { return enabled;}
     public User(String username, String password, String name, String email, String role) {

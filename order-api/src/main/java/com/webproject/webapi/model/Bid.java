@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -22,12 +21,12 @@ public class Bid {
     private Double amount;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "item_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", referencedColumnName = "id")
     private Item item;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User bidder;
 
     public Bid(String bidTime, Double amount, Item item, User bidder) {
