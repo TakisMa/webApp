@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface BidService {
     Bid saveBid(Bid bid);
-    Double getAmount(Long id);
+    Bid getHighestAmount(String id);
 
 }

@@ -1,10 +1,10 @@
-package com.webproject.webapi.rest;
+package com.webproject.webapi.rest.controller;
 
 import com.webproject.webapi.config.SwaggerConfig;
 import com.webproject.webapi.mapper.ItemMapper;
 import com.webproject.webapi.model.Item;
 import com.webproject.webapi.model.User;
-import com.webproject.webapi.rest.dto.CreateItemRequest;
+import com.webproject.webapi.rest.request.CreateItemRequest;
 import com.webproject.webapi.rest.dto.ItemDto;
 import com.webproject.webapi.security.CustomUserDetails;
 import com.webproject.webapi.service.ItemService;
@@ -54,5 +54,7 @@ public class ItemController {
 
         return itemMapper.toItemDto(itemService.saveItem(item));
     }
+
+
 
 }

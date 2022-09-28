@@ -31,11 +31,13 @@ public class WebSecurityConfig {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/orders").hasAnyAuthority(ADMIN, USER)
                 .antMatchers(HttpMethod.POST, "/api/items").hasAnyAuthority(ADMIN, USER)
+                .antMatchers(HttpMethod.POST, "/api/bids~").hasAnyAuthority(ADMIN, USER)
                 .antMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority(ADMIN, USER)
                 .antMatchers("/api/orders", "/api/orders/**").hasAnyAuthority(ADMIN, USER)
                 .antMatchers("/api/items", "/api/items/**").hasAnyAuthority(ADMIN, USER)
+                .antMatchers("/api/bids", "/api/bids/**").hasAnyAuthority(ADMIN, USER)
                 .antMatchers("/api/users", "/api/users/**").hasAuthority(ADMIN)
-                .antMatchers("/public/**", "/auth/**").permitAll()
+                .antMatchers("/public/**", "/auth/**", "/api/items").permitAll()
                 .antMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

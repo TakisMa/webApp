@@ -1,4 +1,4 @@
-package com.webproject.webapi.rest;
+package com.webproject.webapi.rest.controller;
 
 import com.webproject.webapi.service.OrderService;
 import com.webproject.webapi.service.UserService;

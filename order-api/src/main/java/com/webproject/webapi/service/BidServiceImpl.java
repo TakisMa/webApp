@@ -15,7 +15,9 @@ public class BidServiceImpl implements BidService {
     public Bid saveBid(Bid bid) { return bidRepository.save(bid); }
 
     @Override
-    public Double getAmount(Long id) {
-        return bidRepository.getAmountById(id);
+    public Bid getHighestAmount(String id) {
+        return bidRepository.getBidByIdOrderByAmountDesc(id);
     }
+
+
 }

@@ -1,7 +1,7 @@
 package com.webproject.webapi.mapper;
 
 import com.webproject.webapi.model.Item;
-import com.webproject.webapi.rest.dto.CreateItemRequest;
+import com.webproject.webapi.rest.request.CreateItemRequest;
 import com.webproject.webapi.rest.dto.ItemDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,6 +16,7 @@ public interface ItemMapper {
     @Mapping(target = "numberOfBids", ignore = true)
     @Mapping(target = "started", ignore = true)
     @Mapping(target = "ends", ignore = true)
+    @Mapping(target = "bid", ignore = true)
     Item toItem(CreateItemRequest createItemRequest);
 
     ItemDto toItemDto(Item item);

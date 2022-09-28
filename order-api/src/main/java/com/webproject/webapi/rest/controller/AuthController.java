@@ -1,13 +1,13 @@
-package com.webproject.webapi.rest;
+package com.webproject.webapi.rest.controller;
 
 import com.webproject.webapi.exception.DuplicatedUserInfoException;
-import com.webproject.webapi.rest.dto.AuthResponse;
-import com.webproject.webapi.rest.dto.SignUpRequest;
+import com.webproject.webapi.rest.request.AuthResponse;
+import com.webproject.webapi.rest.request.SignUpRequest;
 import com.webproject.webapi.security.TokenProvider;
 import com.webproject.webapi.security.WebSecurityConfig;
 import com.webproject.webapi.service.UserService;
 import com.webproject.webapi.model.User;
-import com.webproject.webapi.rest.dto.LoginRequest;
+import com.webproject.webapi.rest.request.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;

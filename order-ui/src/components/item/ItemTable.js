@@ -1,9 +1,10 @@
 import React from 'react'
-import { Grid, Table, Header, Icon, TableCell, Select } from 'semantic-ui-react'
+import { Grid, Table, Header, Icon } from 'semantic-ui-react'
+import BidForm from './BidForm'
 import ItemForm from './ItemForm'
 
 
-function ItemTable({ items, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, handleInputChange, handleCreateItem }) {
+function ItemTable({ items, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, bidAmount, handleInputChange, handleCreateItem, handleUpdateBid }) {
   let itemList
   if (!items || items.length === 0) {
     itemList = (
@@ -23,10 +24,12 @@ function ItemTable({ items, itemName, itemCategory, itemCurrently, itemBuyPrice,
           <Table.Cell>{item.started}</Table.Cell>
           <Table.Cell>{item.ends}</Table.Cell>
           <Table.Cell>{item.description}</Table.Cell>
-        </Table.Row>
+        </Table.Row>   
       )
     })
   }
+
+  
 
   return (
     <>
@@ -51,6 +54,13 @@ function ItemTable({ items, itemName, itemCategory, itemCurrently, itemBuyPrice,
           </Grid.Column>
         </Grid.Row>
       </Grid>
+
+      <BidForm
+        // itemId={itemId}
+        itemCurrently={itemCurrently}
+        handleUpdateBid={handleUpdateBid}
+        handleInputChange={handleInputChange}
+      />
 
       <Table compact striped selectable>
         <Table.Header>

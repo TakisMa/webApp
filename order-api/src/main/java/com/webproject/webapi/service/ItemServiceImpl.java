@@ -26,4 +26,14 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getItemsContainingText(String text) { return itemRepository.findByIdContainingOrDescriptionContainingOrderByStarted(text, text); }
+
+    @Override
+    public Item getItemByBidId(String bidId) {
+        return itemRepository.findItemByBid(bidId);
+    }
+
+    @Override
+    public int setItemBid(Double newBid, String itemId) {
+        return itemRepository.setBid(newBid, itemId);
+    }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Button, Icon, Select } from 'semantic-ui-react'
+import { Form, Button, Icon } from 'semantic-ui-react'
 
 
 function ItemForm({ itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, handleInputChange, handleCreateItem }) {
@@ -48,9 +48,7 @@ function ItemForm({ itemName, itemCategory, itemCurrently, itemBuyPrice, itemDes
         <Button icon labelPosition='right' disabled={createBtnDisabled}>
           Create<Icon name='add' />
         </Button>
-
-
-    </Form.Group>
+      </Form.Group>
     </Form >
   )
 }

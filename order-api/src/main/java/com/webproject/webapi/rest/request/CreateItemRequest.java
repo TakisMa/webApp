@@ -1,4 +1,4 @@
-package com.webproject.webapi.rest.dto;
+package com.webproject.webapi.rest.request;
 
 import lombok.Data;
 

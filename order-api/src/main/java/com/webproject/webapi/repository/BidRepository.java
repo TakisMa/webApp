@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface BidRepository extends JpaRepository<Bid, String> {
     Double getAmountById(Long id);
 
+    Bid getBidByIdOrderByAmountDesc(String id);
+
+
 }

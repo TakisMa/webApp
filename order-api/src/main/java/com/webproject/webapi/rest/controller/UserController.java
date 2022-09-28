@@ -1,4 +1,4 @@
-package com.webproject.webapi.rest;
+package com.webproject.webapi.rest.controller;
 
 import com.webproject.webapi.mapper.UserMapper;
 import com.webproject.webapi.security.CustomUserDetails;

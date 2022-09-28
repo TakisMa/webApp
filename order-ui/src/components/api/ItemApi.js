@@ -8,8 +8,10 @@ export const itemApi = {
   deleteUser,
   enableUser,
   getItems,
+  getAllItems,
   deleteItem,
   createItem,
+  updateBid,
   getUserMe,
   getOrders,
   deleteOrder,
@@ -43,9 +45,11 @@ function deleteUser(user, username) {
 }
 
 function enableUser(user, username) {
-  console.log(`[PATCH]: User is: ${user} with username: ${username}`)
   return instance.patch(`/api/users/${username}`, {
-    headers: { 'Authorization': bearerAuth(user) }
+    headers: { 
+      'Content-type': 'application/json',
+      'Authorization': bearerAuth(user) 
+    }
   })
 }
 
@@ -54,6 +58,10 @@ function getItems(user, text) {
   return instance.get(url, {
     headers: { 'Authorization': bearerAuth(user) }
   })
+}
+
+function getAllItems() {
+  return instance.get(`/api/items`)
 }
 
 function deleteItem(user, itemId) {
@@ -67,6 +75,16 @@ function createItem(user, item) {
     headers: {
       'Content-type': 'application/json',
       'Authorization': bearerAuth(user)
+    }
+  })
+}
+
+function updateBid(user, newBid) {
+  console.log(`newBid.name: ${newBid.name}\nnewBid.amount: ${newBid.newAmount}`)
+  return instance.post(`/api/bids`, newBid, {
+    headers: { 
+      'Content-type': 'application/json',
+      'Authorization': bearerAuth(user) 
     }
   })
 }

@@ -10,5 +10,6 @@ public interface ItemService {
     Item getItemById(String id);
     List<Item> getItems();
     List<Item> getItemsContainingText(String text);
-
+    Item getItemByBidId(String bidId);
+    int setItemBid(Double newBid, String itemId);
 }
