@@ -20,6 +20,7 @@ class UserPage extends Component {
     itemCurrently: '',
     itemBuyPrice: '',
     itemDescription: '',
+    bidAmount: ''
   }
 
   componentDidMount() {
@@ -108,11 +109,36 @@ class UserPage extends Component {
       })
   }
 
+  handleUpdateBid = (itemId) => {
+    const Auth = this.context
+    const user = Auth.getUser()
+
+    let { itemName, bidAmount } = this.state
+
+    const newBid = {
+      itemId: itemId,
+      newAmount: bidAmount
+    }
+    console.log(`newBid.name: ${newBid.name}\nnewBid.amount: ${newBid.newAmount}`)
+    itemApi.updateBid(user, newBid)
+      .then(() => {
+        this.handleGetUserMe()
+        this.setState({
+          itemName: '',
+          bidAmount: ''
+        })
+      })
+      .catch(error => {
+        handleLogError(error)
+      })
+
+  }
+
   render() {
     if (!this.state.isUser) {
       return <Redirect to='/' />
     } else {
-      const { userMe, isLoading, orderDescription, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription } = this.state
+      const { userMe, isLoading, orderDescription, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, bidAmount } = this.state
       return (
         <Container>
           <ItemTable
@@ -123,8 +149,10 @@ class UserPage extends Component {
             itemCurrently={itemCurrently}
             itemBuyPrice={itemBuyPrice}
             itemDescription={itemDescription}
+            bidAmount={bidAmount}
             handleCreateItem={this.handeCreateItem}
             handleInputChange={this.handleInputChange}
+            handleUpdateBid={this.handleUpdateBid}
           />
 
           <OrderTable
