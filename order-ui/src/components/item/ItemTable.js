@@ -1,10 +1,13 @@
 import React from 'react'
-import { Grid, Table, Header, Icon } from 'semantic-ui-react'
+import { Grid, Table, Header, Icon, Button } from 'semantic-ui-react'
 import BidForm from './BidForm'
 import ItemForm from './ItemForm'
 
 
-function ItemTable({ items, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, bidAmount, handleInputChange, handleCreateItem, handleUpdateBid }) {
+function ItemTable(props) {
+
+  const {items, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, bidAmount} = props
+  const {handleInputChange, handleCreateItem, handleDeleteItem, handleUpdateBid} = props
   let itemList
   if (!items || items.length === 0) {
     itemList = (
@@ -16,6 +19,15 @@ function ItemTable({ items, itemName, itemCategory, itemCurrently, itemBuyPrice,
     itemList = items.map(item => {
       return (
         <Table.Row key={item.id}>
+          <Table.Cell collapsing>
+            <Button
+              circular
+              color='red'
+              size='small'
+              icon='trash'
+              onClick={() => handleDeleteItem(item.id)}
+            />
+          </Table.Cell>
           <Table.Cell>{item.id}</Table.Cell>
           <Table.Cell>{item.name}</Table.Cell>
           <Table.Cell>{item.category}</Table.Cell>
@@ -24,6 +36,14 @@ function ItemTable({ items, itemName, itemCategory, itemCurrently, itemBuyPrice,
           <Table.Cell>{item.started}</Table.Cell>
           <Table.Cell>{item.ends}</Table.Cell>
           <Table.Cell>{item.description}</Table.Cell>
+          <Table.Cell>
+            <BidForm
+            itemId={item.id}
+            itemCurrently={itemCurrently}
+            handleUpdateBid={handleUpdateBid}
+            handleInputChange={handleInputChange}
+          />
+          </Table.Cell>
         </Table.Row>   
       )
     })
@@ -50,21 +70,23 @@ function ItemTable({ items, itemName, itemCategory, itemCurrently, itemBuyPrice,
               itemDescription={itemDescription}
               handleInputChange={handleInputChange}
               handleCreateItem={handleCreateItem}
+              handleDeleteItem={handleDeleteItem}
             />
           </Grid.Column>
         </Grid.Row>
       </Grid>
 
-      <BidForm
+      {/* <BidForm
         // itemId={itemId}
         itemCurrently={itemCurrently}
         handleUpdateBid={handleUpdateBid}
         handleInputChange={handleInputChange}
-      />
+      /> */}
 
       <Table compact striped selectable>
         <Table.Header>
           <Table.Row>
+            <Table.HeaderCell width={1}></Table.HeaderCell>
             <Table.HeaderCell width={3}>ID</Table.HeaderCell>
             <Table.HeaderCell width={2}>Name</Table.HeaderCell>
             <Table.HeaderCell width={2}>Category</Table.HeaderCell>
@@ -73,6 +95,7 @@ function ItemTable({ items, itemName, itemCategory, itemCurrently, itemBuyPrice,
             <Table.HeaderCell width={3}>Started</Table.HeaderCell>
             <Table.HeaderCell width={3}>Ends</Table.HeaderCell>
             <Table.HeaderCell width={3}>Description</Table.HeaderCell>
+            
           </Table.Row>
         </Table.Header>
         <Table.Body>

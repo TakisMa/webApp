@@ -33,7 +33,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public int setItemBid(Double newBid, String itemId) {
-        return itemRepository.setBid(newBid, itemId);
+    public int updateItemCurrently(Double newBid, String itemId) {
+        return itemRepository.updateCurrentlyById(newBid, itemId);
+    }
+
+    @Override
+    public void deleteItem(String id) {
+        itemRepository.deleteById(id);
     }
 }

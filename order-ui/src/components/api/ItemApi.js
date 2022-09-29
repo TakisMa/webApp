@@ -45,7 +45,7 @@ function deleteUser(user, username) {
 }
 
 function enableUser(user, username) {
-  return instance.patch(`/api/users/${username}`, {
+  return instance.put(`/api/users/${username}`, {
     headers: { 
       'Content-type': 'application/json',
       'Authorization': bearerAuth(user) 
@@ -80,7 +80,6 @@ function createItem(user, item) {
 }
 
 function updateBid(user, newBid) {
-  console.log(`newBid.name: ${newBid.name}\nnewBid.amount: ${newBid.newAmount}`)
   return instance.post(`/api/bids`, newBid, {
     headers: { 
       'Content-type': 'application/json',

@@ -11,5 +11,6 @@ public interface ItemService {
     List<Item> getItems();
     List<Item> getItemsContainingText(String text);
     Item getItemByBidId(String bidId);
-    int setItemBid(Double newBid, String itemId);
+    int updateItemCurrently(Double newBid, String itemId);
+    void deleteItem(String id);
 }

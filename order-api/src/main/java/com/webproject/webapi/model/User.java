@@ -27,7 +27,7 @@ public class User {
     private String name;
     private String email;
     private String role;
-    private boolean enabled = true;
+    private boolean enabled = false;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();

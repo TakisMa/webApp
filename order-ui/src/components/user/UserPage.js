@@ -109,17 +109,30 @@ class UserPage extends Component {
       })
   }
 
+  handleDeleteItem = (itemId) => {
+    const Auth = this.context
+    const user = Auth.getUser()
+
+    itemApi.deleteItem(user, itemId)
+      .then(() => {
+        this.handleGetUserMe()
+      })
+      .catch((error) => {
+        this.handleLogError(error)
+      })
+
+  }
+
   handleUpdateBid = (itemId) => {
     const Auth = this.context
     const user = Auth.getUser()
 
-    let { itemName, bidAmount } = this.state
+    let { bidAmount } = this.state
 
     const newBid = {
       itemId: itemId,
       newAmount: bidAmount
     }
-    console.log(`newBid.name: ${newBid.name}\nnewBid.amount: ${newBid.newAmount}`)
     itemApi.updateBid(user, newBid)
       .then(() => {
         this.handleGetUserMe()
@@ -128,7 +141,7 @@ class UserPage extends Component {
           bidAmount: ''
         })
       })
-      .catch(error => {
+      .catch((error) => {
         handleLogError(error)
       })
 
@@ -151,8 +164,9 @@ class UserPage extends Component {
             itemDescription={itemDescription}
             bidAmount={bidAmount}
             handleCreateItem={this.handeCreateItem}
-            handleInputChange={this.handleInputChange}
+            handleDeleteItem={this.handleDeleteItem}
             handleUpdateBid={this.handleUpdateBid}
+            handleInputChange={this.handleInputChange}
           />
 
           <OrderTable

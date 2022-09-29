@@ -55,6 +55,12 @@ public class ItemController {
         return itemMapper.toItemDto(itemService.saveItem(item));
     }
 
+    @Operation(security = {@SecurityRequirement(name = SwaggerConfig.BEARER_KEY_SECURITY_SCHEME)})
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @DeleteMapping("/{id}")
+    public void deleteItem(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable String id) {
+        itemService.deleteItem(id);
+    }
 
 
 }

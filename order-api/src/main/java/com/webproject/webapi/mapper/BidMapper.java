@@ -12,6 +12,8 @@ public interface BidMapper {
 
 
     @Mapping(target = "bidder", ignore = true)
+    @Mapping(target = "item", ignore = true)
+
     BidDto toBidDto(Bid bid);
 
 }

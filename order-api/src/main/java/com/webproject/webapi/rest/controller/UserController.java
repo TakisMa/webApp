@@ -10,13 +10,17 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+
 @Slf4j
+@CrossOrigin
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/users")
@@ -29,7 +33,6 @@ public class UserController {
     @GetMapping("/me")
     public UserDto getCurrentUser(@AuthenticationPrincipal CustomUserDetails currentUser) {
         UserDto userDto = userMapper.toUserDto(userService.validateAndGetUserByUsername(currentUser.getUsername()));
-        log.info("UserDto" + userDto);
         return userDto;
     }
 
@@ -37,8 +40,8 @@ public class UserController {
     @GetMapping
     public List<UserDto> getUsers() {
         return userService.getUsers().stream()
-                .map(userMapper::toUserDto)
-                .collect(Collectors.toList());
+            .map(userMapper::toUserDto)
+            .collect(Collectors.toList());
     }
 
     @Operation(security = {@SecurityRequirement(name = SwaggerConfig.BEARER_KEY_SECURITY_SCHEME)})
@@ -57,9 +60,10 @@ public class UserController {
 
     @Operation(security = {@SecurityRequirement(name = SwaggerConfig.BEARER_KEY_SECURITY_SCHEME)})
     @PutMapping("/{username}")
-    public UserDto enableUser(@PathVariable String username) {
-        User user = userService.validateAndGetUserByUsername(username);
-        userService.deleteUser(user);
+    public UserDto enableUser(@RequestParam String username) {
+        User user = userService.enableUser(username);
         return userMapper.toUserDto(user);
     }
 }
+
+
