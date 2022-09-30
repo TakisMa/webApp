@@ -128,6 +128,7 @@ class UserPage extends Component {
     const user = Auth.getUser()
 
     let { bidAmount } = this.state
+    
 
     const newBid = {
       itemId: itemId,

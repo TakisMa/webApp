@@ -36,14 +36,7 @@ function ItemTable(props) {
           <Table.Cell>{item.started}</Table.Cell>
           <Table.Cell>{item.ends}</Table.Cell>
           <Table.Cell>{item.description}</Table.Cell>
-          <Table.Cell>
-            <BidForm
-            itemId={item.id}
-            itemCurrently={itemCurrently}
-            handleUpdateBid={handleUpdateBid}
-            handleInputChange={handleInputChange}
-          />
-          </Table.Cell>
+          
         </Table.Row>   
       )
     })
@@ -75,13 +68,6 @@ function ItemTable(props) {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-
-      {/* <BidForm
-        // itemId={itemId}
-        itemCurrently={itemCurrently}
-        handleUpdateBid={handleUpdateBid}
-        handleInputChange={handleInputChange}
-      /> */}
 
       <Table compact striped selectable>
         <Table.Header>

@@ -32,7 +32,7 @@ public class Item {
     private String description;
 
 
-    @OneToOne(mappedBy = "item", cascade = CascadeType.MERGE)
+    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private Bid bid;
 
     @ManyToOne(fetch = FetchType.LAZY)

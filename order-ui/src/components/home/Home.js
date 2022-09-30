@@ -1,17 +1,31 @@
 import React, { Component } from 'react'
 import { Statistic, Icon, Grid, Container, Segment, Dimmer, Loader, GridColumn } from 'semantic-ui-react'
 import { itemApi } from '../api/ItemApi'
+import AuthContext from '../context/AuthContext'
 import { handleLogError } from '../misc/Helpers'
 import AuctionTable from './AuctionTable'
 
 class Home extends Component {
+  static contextType = AuthContext
+
   state = {
+    isUser: false,
     isLoading: false,
-    items: null
+    items: null, 
+    bidAmount: ''
   }
 
   async componentDidMount() {
     this.handleGetItems()
+
+    const Auth = this.context
+    const user = Auth.getUser()
+    const isUser = user.data.rol[0] === 'USER'
+    this.setState({ isUser })
+  }
+
+  handleInputChange = (e, { name, value }) => {
+    this.setState({ [name]: value })
   }
 
   handleGetItems = () => {
@@ -28,8 +42,32 @@ class Home extends Component {
       })
   }
 
+  handleUpdateBid = (itemId) => {
+    this.setState({isLoading: true})
+    const Auth = this.context
+    const user = Auth.getUser()
+
+    let { bidAmount } = this.state
+    
+    const newBid = {
+      itemId: itemId,
+      newAmount: bidAmount
+    }
+    itemApi.updateBid(user, newBid)
+      .then(() => {
+        this.handleGetItems()
+        this.setState({
+          isLoading:false
+        })
+      })
+      .catch((error) => {
+        handleLogError(error)
+      })
+
+  }
+
   render() {
-    const { items, isLoading } = this.state
+    const { items, isUser, isLoading } = this.state
 
     if (isLoading) {
       return (
@@ -41,7 +79,7 @@ class Home extends Component {
       )
     } else {
       return (
-        <Container text maxWidth="sm">
+        <Container>
           <Grid>
             <Grid.Row>
               <Grid.Column textAlign='center'>
@@ -57,6 +95,9 @@ class Home extends Component {
                 <Segment color='violet' >
                  <AuctionTable 
                     items={items}
+                    isUser={isUser}
+                    handleUpdateBid={this.handleUpdateBid}
+                    handleInputChange={this.handleInputChange}
                   />   
                 </Segment>
               </GridColumn>

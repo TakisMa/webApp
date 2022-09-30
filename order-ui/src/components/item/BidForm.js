@@ -2,10 +2,11 @@ import React from 'react'
 import { Form, Button, Icon } from 'semantic-ui-react'
 
 
-function BidForm({ itemId, bidAmount, handleInputChange, handleUpdateBid }) {
+function BidForm({ itemId, handleInputChange, handleUpdateBid }) {
   const createBtnDisabled = false//= (itemName.trim() === '' || itemCategory.trim() === '' || bidAmount == '' || itemDescription.trim() === '')
+  let bidAmount
   return (
-    <Form onSubmit={() => handleUpdateBid(itemId)}>
+    <Form onSubmit={() => handleUpdateBid(itemId)} >
       <Form.Group>
         <Form.Input
           name='bidAmount'
