@@ -6,8 +6,8 @@ import ItemForm from './ItemForm'
 
 function ItemTable(props) {
 
-  const {items, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, bidAmount} = props
-  const {handleInputChange, handleCreateItem, handleDeleteItem, handleUpdateBid} = props
+  const {items, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, itemEnds} = props
+  const {handleInputChange, handleCreateItem, handleDeleteItem} = props
   let itemList
   if (!items || items.length === 0) {
     itemList = (
@@ -61,6 +61,7 @@ function ItemTable(props) {
               itemCurrently={itemCurrently}
               itemBuyPrice={itemBuyPrice}
               itemDescription={itemDescription}
+              itemEnds={itemEnds}
               handleInputChange={handleInputChange}
               handleCreateItem={handleCreateItem}
               handleDeleteItem={handleDeleteItem}

@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Button, Icon } from 'semantic-ui-react'
 
 
-function ItemForm({ itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, handleInputChange, handleCreateItem }) {
+function ItemForm({ itemName, itemCategory, itemCurrently, itemBuyPrice, itemEnds, itemDescription, handleInputChange, handleCreateItem }) {
   const createBtnDisabled = false//= (itemName.trim() === '' || itemCategory.trim() === '' || itemCurrently == '' || itemDescription.trim() === '')
   return (
     <Form onSubmit={handleCreateItem}>
@@ -39,16 +39,23 @@ function ItemForm({ itemName, itemCategory, itemCurrently, itemBuyPrice, itemDes
         />
 
         <Form.Input
-          name='itemDescription'
-          placeholder='Description *'
-          value={itemDescription}
+          name='itemEnds'
+          placeholder='Auction Duration'
+          value={itemEnds}
           onChange={handleInputChange}
         />
+
 
         <Button icon labelPosition='right' disabled={createBtnDisabled}>
           Create<Icon name='add' />
         </Button>
       </Form.Group>
+      <Form.TextArea
+          name='itemDescription'
+          placeholder='Description *'
+          value={itemDescription}
+          onChange={handleInputChange}
+        />
     </Form >
   )
 }

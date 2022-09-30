@@ -32,6 +32,12 @@ public class Item {
     private String description;
 
 
+    public void setEnds(String ends) {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime dateTimeEnds = LocalDateTime.now().plusDays(Long.parseLong(ends));
+        this.ends = dateTimeEnds.format(format);
+    }
+
     @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private Bid bid;
 
@@ -54,10 +60,10 @@ public class Item {
 
     @PrePersist
     public void onPrePersist() {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime dateTimeStart = LocalDateTime.now();
-        LocalDateTime dateTimeEnd = LocalDateTime.now().plusDays(7);
+//        LocalDateTime dateTimeEnd = LocalDateTime.now().plusDays(7);
         started = dateTimeStart.format(format);
-        ends = dateTimeEnd.format(format);
+//        ends = dateTimeEnd.format(format);
     }
 }

@@ -16,6 +16,8 @@ public class CreateItemRequest {
 
     private Double buyPrice;
 
+    private String ends;
+
     @NotBlank
     private String description;
 }

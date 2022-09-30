@@ -51,6 +51,7 @@ public class ItemController {
         Item item = itemMapper.toItem(createItemRequest);
         item.setId(UUID.randomUUID().toString());
         item.setSeller(user);
+        item.setEnds(createItemRequest.getEnds());
 
         return itemMapper.toItemDto(itemService.saveItem(item));
     }

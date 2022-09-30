@@ -20,6 +20,7 @@ class UserPage extends Component {
     itemCurrently: '',
     itemBuyPrice: '',
     itemDescription: '',
+    itemEnds: '',
     bidAmount: ''
   }
 
@@ -78,7 +79,7 @@ class UserPage extends Component {
     const Auth = this.context
     const user = Auth.getUser()
 
-    let { itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription } = this.state
+    let { itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, itemEnds } = this.state
     itemName = itemName.trim();
     itemCategory = itemCategory.trim();
     itemDescription = itemDescription.trim()
@@ -91,7 +92,8 @@ class UserPage extends Component {
       category: itemCategory,
       currently: itemCurrently,
       buyPrice: itemBuyPrice,
-      description: itemDescription
+      description: itemDescription,
+      ends: itemEnds
     }
     itemApi.createItem(user, item)
       .then(() => {
@@ -101,7 +103,8 @@ class UserPage extends Component {
           itemCategory: '',
           itemCurrently: '',
           itemBuyPrice: '',
-          itemDescription: ''
+          itemDescription: '',
+          itemEnds: ''
         })
       })
       .catch(error => {
@@ -152,7 +155,7 @@ class UserPage extends Component {
     if (!this.state.isUser) {
       return <Redirect to='/' />
     } else {
-      const { userMe, isLoading, orderDescription, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, bidAmount } = this.state
+      const { userMe, isLoading, orderDescription, itemName, itemCategory, itemCurrently, itemBuyPrice, itemDescription, itemEnds } = this.state
       return (
         <Container>
           <ItemTable
@@ -163,7 +166,7 @@ class UserPage extends Component {
             itemCurrently={itemCurrently}
             itemBuyPrice={itemBuyPrice}
             itemDescription={itemDescription}
-            bidAmount={bidAmount}
+            itemEnds={itemEnds}
             handleCreateItem={this.handeCreateItem}
             handleDeleteItem={this.handleDeleteItem}
             handleUpdateBid={this.handleUpdateBid}
