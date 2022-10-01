@@ -1,6 +1,5 @@
 package com.webproject.webapi.rest.controller;
 
-import com.webproject.webapi.service.OrderService;
 import com.webproject.webapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class PublicController {
 
     private final UserService userService;
-    private final OrderService orderService;
 
     @GetMapping("/numberOfUsers")
     public Integer getNumberOfUsers() {
         return userService.getUsers().size();
     }
 
-    @GetMapping("/numberOfOrders")
-    public Integer getNumberOfOrders() {
-        return orderService.getOrders().size();
-    }
 }

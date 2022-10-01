@@ -13,9 +13,6 @@ export const itemApi = {
   createItem,
   updateBid,
   getUserMe,
-  getOrders,
-  deleteOrder,
-  createOrder
 }
 
 function authenticate(username, password) {
@@ -38,7 +35,6 @@ function getUsers(user, username) {
 }
 
 function deleteUser(user, username) {
-  console.log(`[DELETE]: User is: ${user} with username: ${username}`)
   return instance.delete(`/api/users/${username}`, {
     headers: { 'Authorization': bearerAuth(user) }
   })
@@ -53,11 +49,9 @@ function enableUser(user, username) {
   })
 }
 
-function getItems(user, text) {
-  const url = text ? `/api/items?text=${text}` : '/api/items'
-  return instance.get(url, {
-    headers: { 'Authorization': bearerAuth(user) }
-  })
+function getItems(text, currentlyLow, currentlyHigh) {
+  const url = text ? `/api/items?text=${text}&currentlyLow=${currentlyLow}&currentlyHigh=${currentlyHigh}` : '/api/items'
+  return instance.get(url)
 }
 
 function getAllItems() {
@@ -91,27 +85,5 @@ function updateBid(user, newBid) {
 function getUserMe(user) {
   return instance.get('/api/users/me', {
     headers: { 'Authorization': bearerAuth(user) }
-  })
-}
-
-function getOrders(user, text) {
-  const url = text ? `/api/orders?text=${text}` : '/api/orders'
-  return instance.get(url, {
-    headers: { 'Authorization': bearerAuth(user) }
-  })
-}
-
-function deleteOrder(user, orderId) {
-  return instance.delete(`/api/orders/${orderId}`, {
-    headers: { 'Authorization': bearerAuth(user) }
-  })
-}
-
-function createOrder(user, order) {
-  return instance.post('/api/orders', order, {
-    headers: {
-      'Content-type': 'application/json',
-      'Authorization': bearerAuth(user)
-    }
   })
 }

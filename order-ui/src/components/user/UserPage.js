@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
-import OrderTable from './OrderTable'
 import ItemTable from '../item/ItemTable'
 import AuthContext from '../context/AuthContext'
 import { itemApi } from '../api/ItemApi'
@@ -170,14 +169,6 @@ class UserPage extends Component {
             handleCreateItem={this.handeCreateItem}
             handleDeleteItem={this.handleDeleteItem}
             handleUpdateBid={this.handleUpdateBid}
-            handleInputChange={this.handleInputChange}
-          />
-
-          <OrderTable
-            orders={userMe  && userMe.orders}
-            isLoading={isLoading}
-            orderDescription={orderDescription}
-            handleCreateOrder={this.handleCreateOrder}
             handleInputChange={this.handleInputChange}
           />
         </Container>

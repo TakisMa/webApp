@@ -1,9 +1,11 @@
 import React from 'react'
-import { Table } from 'semantic-ui-react'
+import { Table, Form } from 'semantic-ui-react'
 import BidForm from '../item/BidForm'
 
-export default function AuctionTable({ items, isUser, handleUpdateBid, handleInputChange }) {
-  let itemList
+
+export default function AuctionTable({ items, searchTerm, isUser, handleUpdateBid, handleInputChange }) {
+
+  let itemList  
   if (!items || items.length === 0) {
     itemList = (
       <Table.Row key='no-item'>
@@ -11,49 +13,65 @@ export default function AuctionTable({ items, isUser, handleUpdateBid, handleInp
       </Table.Row>
     )
   } else {
-    itemList = items.map(item => {
-      if(isUser){
-        return (
-          <Table.Row key={item.id}>
-            {/* <Table.Cell>{item.id}</Table.Cell> */}
-            <Table.Cell>{item.name}</Table.Cell>
-            <Table.Cell>{item.category}</Table.Cell>
-            <Table.Cell>{item.currently}</Table.Cell>
-            <Table.Cell>{item.buyPrice}</Table.Cell>
-            <Table.Cell>{item.started}</Table.Cell>
-            <Table.Cell>{item.ends}</Table.Cell>
-            <Table.Cell>{item.description}</Table.Cell>
-            <Table.Cell>
-              <BidForm
-              itemId={item.id}
-              handleUpdateBid={handleUpdateBid}
-              handleInputChange={handleInputChange}
-              />
-            </Table.Cell>
-          </Table.Row>   
-        )
-      }
-      else {
-        return( 
-          <Table.Row key={item.id}>
-            {/* <Table.Cell>{item.id}</Table.Cell> */}
-            <Table.Cell>{item.name}</Table.Cell>
-            <Table.Cell>{item.category}</Table.Cell>
-            <Table.Cell>{item.currently}</Table.Cell>
-            <Table.Cell>{item.buyPrice}</Table.Cell>
-            <Table.Cell>{item.started}</Table.Cell>
-            <Table.Cell>{item.ends}</Table.Cell>
-            <Table.Cell>{item.description}</Table.Cell>
-          </Table.Row>
-        )
-      }
-    })
+    itemList = items
+      .filter((item) => {
+        return item.category.toLowerCase().includes(searchTerm.toLowerCase())
+      })
+      .map(item => {
+        if (isUser) {
+          return (
+            <Table.Row key={item.id}>
+              {/* <Table.Cell>{item.id}</Table.Cell> */}
+              <Table.Cell>{item.name}</Table.Cell>
+              <Table.Cell>{item.category}</Table.Cell>
+              <Table.Cell>{item.currently}</Table.Cell>
+              <Table.Cell>{item.buyPrice}</Table.Cell>
+              <Table.Cell>{item.started}</Table.Cell>
+              <Table.Cell>{item.ends}</Table.Cell>
+              <Table.Cell>{item.description}</Table.Cell>
+              <Table.Cell>
+                <BidForm
+                  itemId={item.id}
+                  handleUpdateBid={handleUpdateBid}
+                  handleInputChange={handleInputChange}
+                />
+              </Table.Cell>
+            </Table.Row>
+          )
+        }
+        else {
+          return (
+            <Table.Row key={item.id}>
+              {/* <Table.Cell>{item.id}</Table.Cell> */}
+              <Table.Cell>{item.name}</Table.Cell>
+              <Table.Cell>{item.category}</Table.Cell>
+              <Table.Cell>{item.currently}</Table.Cell>
+              <Table.Cell>{item.buyPrice}</Table.Cell>
+              <Table.Cell>{item.started}</Table.Cell>
+              <Table.Cell>{item.ends}</Table.Cell>
+              <Table.Cell>{item.description}</Table.Cell>
+            </Table.Row>
+          )
+        }
+      })
   }
 
-  
 
   return (
     <>
+      <Form>
+        <Form.Input
+          name='searchTerm'
+          value={searchTerm}
+          icon='search'
+          placeholder='Search' 
+          type='text'
+          onChange={handleInputChange}
+        />
+      </Form>
+      
+
+      
       <Table compact striped selectable >
         <Table.Header>
           <Table.Row>

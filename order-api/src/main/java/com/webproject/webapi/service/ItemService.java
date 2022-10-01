@@ -10,6 +10,7 @@ public interface ItemService {
     Item getItemById(String id);
     List<Item> getItems();
     List<Item> getItemsContainingText(String text);
+    List<Item> searchAuctionItems(String text, Double currentlyLow, Double currentlyHigh);
     Item getItemByBidId(String bidId);
     int updateItemCurrently(Double newBid, String itemId);
     void deleteItem(String id);

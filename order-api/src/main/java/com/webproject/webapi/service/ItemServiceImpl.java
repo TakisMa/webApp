@@ -28,6 +28,11 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getItemsContainingText(String text) { return itemRepository.findByIdContainingOrDescriptionContainingOrderByStarted(text, text); }
 
     @Override
+    public List<Item> searchAuctionItems(String text, Double currentlyLow, Double currentlyHigh) {
+        return itemRepository.findByCategoryContainingOrDescriptionContainingOrCurrentlyBetweenOrderByStarted(text, text, currentlyLow, currentlyHigh);
+    }
+
+    @Override
     public Item getItemByBidId(String bidId) {
         return itemRepository.findItemByBid(bidId);
     }

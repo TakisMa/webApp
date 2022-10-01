@@ -29,13 +29,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/orders").hasAnyAuthority(ADMIN, USER)
                 .antMatchers(HttpMethod.POST, "/api/items").hasAnyAuthority(ADMIN, USER)
                 .antMatchers(HttpMethod.DELETE, "/api/items").hasAnyAuthority(ADMIN, USER)
                 .antMatchers(HttpMethod.POST, "/api/bids").hasAnyAuthority(ADMIN, USER)
                 .antMatchers(HttpMethod.PUT, "/api/users/*").hasAnyAuthority(ADMIN, USER)
                 .antMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority(ADMIN, USER)
-                .antMatchers("/api/orders", "/api/orders/**").hasAnyAuthority(ADMIN, USER)
                 .antMatchers("/api/items", "/api/items/**").hasAnyAuthority(ADMIN, USER)
                 .antMatchers("/api/bids", "/api/bids/**").hasAnyAuthority(ADMIN, USER)
                 .antMatchers("/api/users", "/api/users/**").hasAuthority(ADMIN)

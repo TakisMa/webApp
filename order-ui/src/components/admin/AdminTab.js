@@ -1,19 +1,37 @@
 import React from 'react'
-import { Tab } from 'semantic-ui-react'
-import UserTable from './UserTable'
-import OrderTable from './OrderTable'
+import { Form, Tab } from 'semantic-ui-react'
+import AdminItemTable from './AdminItemTable'
+import AdminUserTable from './AdminUserTable'
+
+const handleSearchUser = (users) => {
+  let userList, searchTerm
+  if (!users || users.length() == 0) {
+    return users
+  } else {
+    <Form>
+      <Form.Input
+        icon='search icon'
+        placeholder='Search' type='text'
+        onChange={(e) => {
+          searchTerm = e.target.value
+        }}
+      />
+
+    </Form>
+  }
+}
 
 function AdminTab(props) {
   const { handleInputChange } = props
   const { isUsersLoading, users, userUsernameSearch, handleDeleteUser, handleEnableUser, handleSearchUser } = props
-  const { isOrdersLoading, orders, orderDescription, orderTextSearch, handleCreateOrder, handleDeleteOrder, handleSearchOrder } = props
+  const { isItemsLoading, items, handleDeleteItem, itemCategorySearch } = props
 
   const panes = [
     {
       menuItem: { key: 'users', icon: 'users', content: 'Users' },
       render: () => (
         <Tab.Pane loading={isUsersLoading}>
-          <UserTable
+          <AdminUserTable
             users={users}
             userUsernameSearch={userUsernameSearch}
             handleInputChange={handleInputChange}
@@ -25,17 +43,14 @@ function AdminTab(props) {
       )
     },
     {
-      menuItem: { key: 'orders', icon: 'laptop', content: 'Orders' },
+      menuItem: { key: 'items', icon: 'laptop', content: 'Items' },
       render: () => (
-        <Tab.Pane loading={isOrdersLoading}>
-          <OrderTable
-            orders={orders}
-            orderDescription={orderDescription}
-            orderTextSearch={orderTextSearch}
+        <Tab.Pane loading={isItemsLoading}>
+          <AdminItemTable
+            items={items}
+            handleDeleteItem={handleDeleteItem}
+            itemCategorySearch={itemCategorySearch}
             handleInputChange={handleInputChange}
-            handleCreateOrder={handleCreateOrder}
-            handleDeleteOrder={handleDeleteOrder}
-            handleSearchOrder={handleSearchOrder}
           />
         </Tab.Pane>
       )

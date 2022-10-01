@@ -32,14 +32,20 @@ public class ItemController {
     private final ItemService itemService;
     private final ItemMapper itemMapper;
 
-    @Operation(security = {@SecurityRequirement(name = SwaggerConfig.BEARER_KEY_SECURITY_SCHEME)})
+//    @Operation(security = {@SecurityRequirement(name = SwaggerConfig.BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping
-    public List<ItemDto> getItems(@RequestParam(value = "text", required = false) String text) {
-        List<Item> items = (text == null) ? itemService.getItems() : itemService.getItemsContainingText(text);
+    public List<ItemDto> getItems(@RequestParam(value = "text", required = false) String text,
+                                  @RequestParam(value = "currentlyLow", required = false) Double currentlyLow,
+                                  @RequestParam(value = "currentlyHigh", required = false) Double currentlyHigh) {
+//        List<Item> items = (text == null) ? itemService.getItems() : itemService.getItemsContainingText(text);
+        List<Item> items = (text == null && currentlyLow == null && currentlyHigh == null) ?
+            itemService.getItems() :
+            itemService.searchAuctionItems(text, currentlyLow, currentlyHigh);
         return items.stream()
             .map(itemMapper::toItemDto)
             .collect(Collectors.toList());
     }
+
 
 
     @Operation(security = {@SecurityRequirement(name = SwaggerConfig.BEARER_KEY_SECURITY_SCHEME)})

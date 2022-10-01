@@ -15,6 +15,10 @@ public interface ItemRepository extends JpaRepository<Item, String> {
     Item findItemByName(String name);
     Item findItemById(String id);
     List<Item> findByIdContainingOrDescriptionContainingOrderByStarted(String id, String description);
+    @Query("select i from Item i " +
+        "where i.category like concat('%', ?1, '%') or i.description like concat('%', ?2, '%') or i.currently between ?3 and ?4 " +
+        "order by i.started")
+    List<Item> findByCategoryContainingOrDescriptionContainingOrCurrentlyBetweenOrderByStarted(String category, String description, Double currentlyLow, Double currentlyHigh);
     Item findItemByBid(String bid_id);
 
     @Transactional
