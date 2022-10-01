@@ -11,13 +11,12 @@ class AdminPage extends Component {
 
   state = {
     users: [],
-    orders: [],
-    orderDescription: '',
-    orderTextSearch: '',
     userUsernameSearch: '',
+    itemCategorySearch: '',
     isAdmin: true,
     isUsersLoading: false,
-    isOrdersLoading: false,
+    isItemsLoading: false,
+    items: null,
   }
 
   componentDidMount() {
@@ -27,10 +26,10 @@ class AdminPage extends Component {
     this.setState({ isAdmin })
 
     this.handleGetUsers()
-    this.handleGetOrders()
+    this.handleGetItems()
   }
 
-  handleInputChange = (e, {name, value}) => {
+  handleInputChange = (e, { name, value }) => {
     this.setState({ [name]: value })
   }
 
@@ -77,95 +76,41 @@ class AdminPage extends Component {
       })
   }
 
-  handleSearchUser = () => {
-    const Auth = this.context
-    const user = Auth.getUser()
 
-    const username = this.state.userUsernameSearch
-    itemApi.getUsers(user, username)
+  handleGetItems = () => {
+    this.setState({ isItemsLoading: true })
+    itemApi.getAllItems()
       .then(response => {
-        const data = response.data
-        const users = data instanceof Array ? data : [data]
-        this.setState({ users })
+        this.setState({ items: response.data })
       })
       .catch(error => {
-        handleLogError(error)
-        this.setState({ users: [] })
-      })
-  }
-
-  handleGetOrders = () => {
-    const Auth = this.context
-    const user = Auth.getUser()
-
-    this.setState({ isOrdersLoading: true })
-    itemApi.getOrders(user)
-      .then(response => {
-        this.setState({ orders: response.data })
-      })
-      .catch(error => {
-        handleLogError(error)
+        this.handleLogError(error)
       })
       .finally(() => {
-        this.setState({ isOrdersLoading: false })
+        this.setState({ isItemsLoading: false })
       })
   }
 
-  handleDeleteOrder = (isbn) => {
+  handleDeleteItem = (itemId) => {
     const Auth = this.context
     const user = Auth.getUser()
 
-    itemApi.deleteOrder(user, isbn)
+    itemApi.deleteItem(user, itemId)
       .then(() => {
-        this.handleGetOrders()
+        this.handleGetUsers()
       })
-      .catch(error => {
-        handleLogError(error)
+      .catch((error) => {
+        this.handleLogError(error)
       })
+
   }
 
-  handleCreateOrder = () => {
-    const Auth = this.context
-    const user = Auth.getUser()
-
-    let { orderDescription } = this.state
-    orderDescription = orderDescription.trim()
-    if (!orderDescription) {
-      return
-    }
-
-    const order = { description: orderDescription }
-    itemApi.createOrder(user, order)
-      .then(() => {
-        this.handleGetOrders()
-        this.setState({ orderDescription: '' })
-      })
-      .catch(error => {
-        handleLogError(error)
-      })
-  }
-
-  handleSearchOrder = () => {
-    const Auth = this.context
-    const user = Auth.getUser()
-
-    const text = this.state.orderTextSearch
-    itemApi.getOrders(user, text)
-      .then(response => {
-        const orders = response.data
-        this.setState({ orders })
-      })
-      .catch(error => {
-        handleLogError(error)
-        this.setState({ orders: [] })
-      })
-  }
 
   render() {
     if (!this.state.isAdmin) {
       return <Redirect to='/' />
     } else {
-      const { isUsersLoading, users, userUsernameSearch, isOrdersLoading, orders, orderDescription, orderTextSearch } = this.state
+      const { isUsersLoading, users, userUsernameSearch, items, isItemsLoading, itemCategorySearch } = this.state
       return (
         <Container>
           <AdminTab
@@ -174,15 +119,11 @@ class AdminPage extends Component {
             userUsernameSearch={userUsernameSearch}
             handleDeleteUser={this.handleDeleteUser}
             handleEnableUser={this.handleEnableUser}
-            handleSearchUser={this.handleSearchUser}
-            isOrdersLoading={isOrdersLoading}
-            orders={orders}
-            orderDescription={orderDescription}
-            orderTextSearch={orderTextSearch}
-            handleCreateOrder={this.handleCreateOrder}
-            handleDeleteOrder={this.handleDeleteOrder}
-            handleSearchOrder={this.handleSearchOrder}
             handleInputChange={this.handleInputChange}
+            items={items}
+            isItemsLoading={isItemsLoading}
+            itemCategorySearch={itemCategorySearch}
+            handleDeleteItem={this.handleDeleteItem}
           />
         </Container>
       )
