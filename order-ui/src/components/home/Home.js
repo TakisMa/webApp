@@ -51,12 +51,17 @@ class Home extends Component {
       })
   }
 
-  handleUpdateBid = (itemId) => {
+  handleUpdateBid = (itemId, itemCurrently) => {
     this.setState({ isLoading: true })
     const Auth = this.context
     const user = Auth.getUser()
 
     let { bidAmount } = this.state
+
+    if(bidAmount <= itemCurrently) {
+      this.setState({ isLoading: false })
+      return
+    }
 
     const newBid = {
       itemId: itemId,
@@ -89,9 +94,9 @@ class Home extends Component {
     } else {
       return (
         <Container>
-          <Grid>
+          <Grid >
             <Grid.Row >
-              <GridColumn textAlign='center'>
+              <GridColumn  textAlign='center'>
                 <Segment color='violet' >
                   <Header size='large'>Auctions</Header>
                   <AuctionTable

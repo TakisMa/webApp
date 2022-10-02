@@ -1,11 +1,11 @@
 import React from 'react'
-import { Table, Form } from 'semantic-ui-react'
+import { Table, Form, Grid } from 'semantic-ui-react'
 import BidForm from '../item/BidForm'
 
 
 export default function AuctionTable({ items, searchTerm, isUser, handleUpdateBid, handleInputChange }) {
 
-  let itemList  
+  let itemList
   if (!items || items.length === 0) {
     itemList = (
       <Table.Row key='no-item'>
@@ -32,6 +32,7 @@ export default function AuctionTable({ items, searchTerm, isUser, handleUpdateBi
               <Table.Cell>
                 <BidForm
                   itemId={item.id}
+                  itemCurrently={item.currently}
                   handleUpdateBid={handleUpdateBid}
                   handleInputChange={handleInputChange}
                 />
@@ -59,19 +60,21 @@ export default function AuctionTable({ items, searchTerm, isUser, handleUpdateBi
 
   return (
     <>
-      <Form>
-        <Form.Input
-          name='searchTerm'
-          value={searchTerm}
-          icon='search'
-          placeholder='Search' 
-          type='text'
-          onChange={handleInputChange}
-        />
-      </Form>
-      
+      <Grid>
+        <Form>
+          <Form.Input
+            name='searchTerm'
+            value={searchTerm}
+            icon='search'
+            placeholder='Search by Category'
+            type='text'
+            onChange={handleInputChange}
+          />
+        </Form>
+      </Grid>
 
-      
+
+
       <Table compact striped selectable >
         <Table.Header>
           <Table.Row>
