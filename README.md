@@ -18,15 +18,12 @@ The goal of this project is to implement an application called `order-app` to ma
   | ------------------------------------------------------------- | ------- | --------------- |
   | `POST /auth/authenticate -d {"username","password"}`          | No      |                 |
   | `POST /auth/signup -d {"username","password","name","email"}` | No      |                 |
-  | `GET /public/numberOfUsers`                                   | No      |                 |
-  | `GET /public/numberOfOrders`                                  | No      |                 |
   | `GET /api/users/me`                                           | Yes     | `ADMIN`, `USER` |
   | `GET /api/users`                                              | Yes     | `ADMIN`         |
   | `GET /api/users/{username}`                                   | Yes     | `ADMIN`         |
   | `DELETE /api/users/{username}`                                | Yes     | `ADMIN`         |
-  | `GET /api/orders [?text]`                                     | Yes     | `ADMIN`         |
-  | `POST /api/orders -d {"description"}`                         | Yes     | `ADMIN`, `USER` |
-  | `DELETE /api/orders/{id}`                                     | Yes     | `ADMIN`         |
+  | `GET /api/items`                                              | Yes     | `ADMIN`         |
+  | `DELETE /api/items/{id}`                                      | Yes     | `ADMIN`, `USER` |
 
 - ### order-ui
 
@@ -151,41 +148,12 @@ The goal of this project is to implement an application called `order-app` to ma
 - **Manual Endpoints Test using curl**
 
   - Open a terminal
-  
-  - Call `GET /public/numberOfUsers`
-    ```
-    curl -i localhost:8080/public/numberOfUsers
-    ```
-    It should return
-    ```
-    HTTP/1.1 200
-    2
-    ```
-
-  - Call `GET /api/orders` without JWT access token
-    ```
-    curl -i localhost:8080/api/orders
-    ```
-    As for this endpoint a valid JWT access token is required, it should return
-    ```
-    HTTP/1.1 401
-    ```
 
   - Call `POST /auth/authenticate` to get `admin` JWT access token
     ```
     ADMIN_ACCESS_TOKEN="$(curl -s -X POST http://localhost:8080/auth/authenticate \
       -H 'Content-Type: application/json' \
       -d '{"username": "admin", "password": "admin"}' | jq -r .accessToken)"
-    ```
-
-  - Call again `GET /api/orders`, now with `admin` JWT access token
-    ```
-    curl -i -H "Authorization: Bearer $ADMIN_ACCESS_TOKEN" localhost:8080/api/orders
-    ```
-    It should return an empty array or an array with orders
-    ```
-    HTTP/1.1 200
-    [ ... ]
     ```
 
   - Call `GET /api/users/me` to get more information about the `admin`
@@ -250,7 +218,7 @@ The goal of this project is to implement an application called `order-app` to ma
 
 - **MySQL**
   ```
-  docker exec -it -e MYSQL_PWD=secret mysql mysql -uroot --database orderdb
+  docker exec -it -e MYSQL_PWD=secret mysql mysql -u root --database orderdb
   show tables;
   ```
 
