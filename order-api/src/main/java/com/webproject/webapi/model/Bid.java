@@ -39,7 +39,7 @@ public class Bid {
 
     @PrePersist
     public void onPrePersist() {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime dateTimeStartBid = LocalDateTime.now();
         bidTime = dateTimeStartBid.format(format);
     }

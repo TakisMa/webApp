@@ -46,7 +46,6 @@ public class BidController {
         Bid bid = new Bid();
         bid.setBidder(user);
         bid.setItem(item);
-        log.info(String.format("new Amount: %s", bidRequest.getNewAmount()));
         bid.setAmount(bidRequest.getNewAmount());
         bid.setId(UUID.randomUUID().toString());
 

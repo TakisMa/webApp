@@ -77,7 +77,6 @@ class Home extends Component {
       .catch((error) => {
         handleLogError(error)
       })
-
   }
 
   render() {
