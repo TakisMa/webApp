@@ -18,15 +18,13 @@ The goal of this project is to implement an application called `order-app` to ma
   | ------------------------------------------------------------- | ------- | --------------- |
   | `POST /auth/authenticate -d {"username","password"}`          | No      |                 |
   | `POST /auth/signup -d {"username","password","name","email"}` | No      |                 |
-  | `GET /public/numberOfUsers`                                   | No      |                 |
-  | `GET /public/numberOfOrders`                                  | No      |                 |
   | `GET /api/users/me`                                           | Yes     | `ADMIN`, `USER` |
   | `GET /api/users`                                              | Yes     | `ADMIN`         |
   | `GET /api/users/{username}`                                   | Yes     | `ADMIN`         |
   | `DELETE /api/users/{username}`                                | Yes     | `ADMIN`         |
-  | `GET /api/orders [?text]`                                     | Yes     | `ADMIN`         |
+  | `GET /api/items`                                              | Yes     | `ADMIN`         |
   | `POST /api/orders -d {"description"}`                         | Yes     | `ADMIN`, `USER` |
-  | `DELETE /api/orders/{id}`                                     | Yes     | `ADMIN`         |
+  | `DELETE /api/orders/{id}`                                     | Yes     | `ADMIN`, `USER         |
 
 - ### order-ui
 
