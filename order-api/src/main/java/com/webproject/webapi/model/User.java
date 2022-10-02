@@ -32,8 +32,8 @@ public class User {
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> items = new ArrayList<>();
 
-    @OneToOne(mappedBy = "bidder", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Bid bid;
+    @OneToMany(mappedBy = "bidder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bid> bid;
 
 
     public boolean getEnabled() { return enabled;}

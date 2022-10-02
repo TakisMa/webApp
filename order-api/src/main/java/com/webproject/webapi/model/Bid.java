@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,7 +26,7 @@ public class Bid {
     @JoinColumn(name = "item_id", referencedColumnName = "id")
     private Item item;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User bidder;
 
@@ -33,7 +34,7 @@ public class Bid {
         this.bidTime = bidTime;
         this.amount = amount;
         this.item = item;
-        this.bidder = bidder;
+//        this.bidder = bidder;
     }
 
     @PrePersist
