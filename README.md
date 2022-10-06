@@ -127,13 +127,7 @@ The goal of this project is to implement an application called `order-app` to ma
   
   - Click `Authorize` button and then, click `Close` button
   
-  - To create an order, click `POST /api/orders` and then, click `Try it out` button
-
-  - Provide the `description` of the order
-    ```
-    { "description": "Buy two iPhones" }
-    ```
-
+  - To create an item, click `POST /api/items` and then, click `Try it out` button
   - Click `Execute` button. It should return something like
     ```
     Code: 200
@@ -165,7 +159,7 @@ The goal of this project is to implement an application called `order-app` to ma
     HTTP/1.1 200
     {
       "id": 1, "username": "admin", "name": "Admin", "email": "admin@mycompany.com", "role": "ADMIN",
-      "orders": []
+      "items": []
     }
     ```
 
@@ -198,18 +192,15 @@ The goal of this project is to implement an application called `order-app` to ma
     Authorization
     =============
                     Endpoints | without token |  user token |  admin token |
-    ------------------------- + ------------- + ----------- + ------------ |
-     GET public/numberOfUsers |           200 |         200 |          200 |
-    GET public/numberOfOrders |           200 |         200 |          200 |
     ......................... + ............. + ........... + ............ |
             GET /api/users/me |           401 |         200 |          200 |
                GET /api/users |           401 |         403 |          200 |
          GET /api/users/user2 |           401 |         403 |          200 |
       DELETE /api/users/user2 |           401 |         403 |          200 |
     ......................... + ............. + ........... + ............ |
-              GET /api/orders |           401 |         403 |          200 |
-             POST /api/orders |           401 |         201 |          201 |
-      DELETE /api/orders/{id} |           401 |         403 |          200 |
+              GET /api/items  |           401 |         403 |          200 |
+             POST /api/items  |           401 |         201 |          201 |
+      DELETE /api/items/{id}  |           401 |         403 |          200 |
     ------------------------------------------------------------------------
      [200] Success -  [201] Created -  [401] Unauthorized -  [403] Forbidden
     ```
